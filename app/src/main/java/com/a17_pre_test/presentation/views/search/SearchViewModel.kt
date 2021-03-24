@@ -2,6 +2,7 @@ package com.a17_pre_test.presentation.views.search
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.a17_pre_test.domain.models.GithubUserDomainModel
 import com.a17_pre_test.domain.usecases.GetUserByNameFlowUseCase
 import com.a17_pre_test.utils.response.Response
@@ -26,7 +27,7 @@ class SearchViewModel(
         val res = getUserByNameFlowUseCase(params)
 
         if (res is Response.Success) {
-            sendAction(Action.UserFlowLoaded(res.data))
+            sendAction(Action.UserFlowLoaded(res.data.cachedIn(viewModelScope)))
         } else {
             sendAction(Action.UserFlowLoaded(null))
         }

@@ -48,6 +48,7 @@ dependencies {
     def gson_version = "2.8.0"
     def okhttp_version = "4.8.1"
     def mockk_version = "1.10.5"
+    def shimmer_version = "0.5.0"
 
     implementation(project(":utils"))
     testImplementation(project(":test_utils"))
@@ -71,6 +72,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation "com.facebook.shimmer:shimmer:$shimmer_version"
     testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation 'junit:junit:4.+'
     testImplementation 'org.amshove.kluent:kluent:1.61'
