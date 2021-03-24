@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.17pretest" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.17pretest" parent="Base.Theme.17pretest" />
+
+    <style name="Base.Theme.17pretest" parent="Base.Theme.MaterialThemeBuilder">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/lime_400</item>
         <item name="colorPrimaryVariant">@color/lime_200</item>
@@ -21,5 +23,17 @@
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSurface</item>
+    </style>
+
+    <style name="Base.Theme.MaterialThemeBuilder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor" tools:ignore="NewApi">?attr/colorSurface</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+        <item name="android:navigationBarColor" tools:ignore="NewApi">
+            ?android:attr/colorBackground
+        </item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
+        <item name="android:navigationBarDividerColor" tools:ignore="NewApi">
+            ?attr/colorControlHighlight
+        </item>
     </style>
 </resources>
