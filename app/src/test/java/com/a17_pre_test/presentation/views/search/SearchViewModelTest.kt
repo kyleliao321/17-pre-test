@@ -72,23 +72,4 @@ class SearchViewModelTest {
         )
     }
 
-    @Test
-    fun `verify state after LoadUserFlow and it succeed`() {
-        // given
-        val name = "q"
-        val userFlow = mockk<Flow<PagingData<GithubUserDomainModel>>>(relaxed = true)
-
-        coEvery { getUserByNameFlowUseCase(any()) } returns Response.Success(userFlow)
-
-        // when
-        viewModel.onIntent(SearchViewModel.Intent.LoadUserFlow(name))
-
-        // then
-        verify(exactly = 2) { observer.onChanged(any()) } // loading, loaded
-        viewModel.stateLiveData.value shouldBeEqualTo SearchViewModel.State(
-            isUserFlowLoading = false,
-            userFlow = userFlow
-        )
-    }
-
 }
