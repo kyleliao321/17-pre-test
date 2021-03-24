@@ -11,5 +11,5 @@ interface GithubUserService {
         @Query("q") matchKeyWord: String,
         @Query("per_page") pageSize: Int,
         @Query("page") pageOffset: Int
-    ) : Response<FilterUserByNameResponse>
+    ): Response<FilterUserByNameResponse>
 }

@@ -1,2 +1,4 @@
+include ':test_utils'
+include ':utils'
 include ':app'
 rootProject.name = "17-pre-test"
