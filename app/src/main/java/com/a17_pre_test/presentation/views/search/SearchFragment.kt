@@ -1,8 +1,6 @@
 package com.a17_pre_test.presentation.views.search
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.a17_pre_test.databinding.FragmentSearchBinding
 import com.a17_pre_test.presentation.adapter.GithubUserAdapter
-import kotlinx.coroutines.flow.collectLatest
+import com.a17_pre_test.utils.extension.textChanges
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import timber.log.Timber
@@ -36,18 +36,6 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private val searchNameWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-        override fun afterTextChanged(s: Editable?) {
-            adapter.refresh()
-            s?.let {
-                viewModel.onIntent(SearchViewModel.Intent.LoadUserFlow(it.toString()))
-            }
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,8 +51,17 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
+    @ExperimentalCoroutinesApi
     private fun setupSearchName(binding: FragmentSearchBinding) {
-        binding.searchName.addTextChangedListener(searchNameWatcher)
+        binding.searchName.textChanges()
+            .debounce(300)
+            .filterNot { it.isNullOrBlank() }
+            .onEach { keyword ->
+                keyword?.let {
+                    viewModel.onIntent(SearchViewModel.Intent.LoadUserFlow(it.toString()))
+                }
+            }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
 
